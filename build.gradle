@@ -11,8 +11,3 @@ allprojects {
 		mavenCentral()
 	}
 }
-
-
-tasks.named('test') {
-	useJUnitPlatform()
-}

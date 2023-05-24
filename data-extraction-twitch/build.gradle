@@ -7,7 +7,12 @@ plugins {
 dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
-    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'io.github.bonigarcia:webdrivermanager:5.3.3'
     implementation 'org.jsoup:jsoup:1.16.1'
+    implementation 'org.seleniumhq.selenium:selenium-java:4.9.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+}
 
+tasks.named('test') {
+    useJUnitPlatform()
 }
