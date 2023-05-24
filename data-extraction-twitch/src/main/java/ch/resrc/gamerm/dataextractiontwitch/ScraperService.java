@@ -6,8 +6,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -17,13 +21,16 @@ import java.util.regex.Pattern;
 @Service
 public class ScraperService {
 
+
     private final WebDriver driver;
+    private final WebDriverWait wait;
 
     public ScraperService() {
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         driver = new ChromeDriver(options);
+        wait = new WebDriverWait(driver, Duration.ofSeconds(5), Duration.ofSeconds(1));
     }
 
     public List<String> extractEmailFromTwitchInfoPage(String streamerId) {
@@ -39,8 +46,11 @@ public class ScraperService {
     String retrieveChannelInfoContent(String streamerId) {
         try {
             driver.get("https://www.twitch.tv/" + streamerId + "/about");
-
-            WebElement element = driver.findElement(By.cssSelector("#root div.channel-root__info"));
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector("#root div.channel-root__info")));
+            wait.until((ExpectedCondition<Boolean>) wd -> {
+                String innerHTML = element.getAttribute("innerHTML");
+                return !innerHTML.contains("ScTowerPlaceholder");
+            });
 
             return element.getAttribute("innerHTML");
         } catch (NoSuchElementException e) {
