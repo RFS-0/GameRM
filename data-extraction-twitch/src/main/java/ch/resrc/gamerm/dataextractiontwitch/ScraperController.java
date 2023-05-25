@@ -16,7 +16,6 @@ public class ScraperController {
 
     @GetMapping("/twitch/{streamerId}")
     public List<String> getEmail(@PathVariable String streamerId) {
-        System.out.println("streamerId: " + streamerId);
         return scraperService.extractEmailFromTwitchInfoPage(streamerId);
     }
 }
