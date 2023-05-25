@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "gamerm.rate-limit.maxRequestsPerMonthAndApiKey",
+      "type": "java.lang.String",
+      "description": "Description for gamerm.rate-limit.maxRequestsPerMonthAndApiKey."
+  }
+] }

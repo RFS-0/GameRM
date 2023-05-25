@@ -5,6 +5,8 @@ plugins {
 }
 
 dependencies {
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
     implementation 'com.github.vladimir-bukhtoyarov:bucket4j-core:7.6.0'
@@ -17,4 +19,8 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+tasks.named('compileJava') {
+    inputs.files(tasks.named('processResources'))
 }
