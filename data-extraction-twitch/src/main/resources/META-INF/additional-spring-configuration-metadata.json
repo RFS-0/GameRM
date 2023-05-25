@@ -3,6 +3,11 @@
     {
       "name": "gamerm.rate-limit.maxRequestsPerMonthAndApiKey",
       "type": "java.lang.String",
-      "description": "Description for gamerm.rate-limit.maxRequestsPerMonthAndApiKey."
-  }
-] }
+      "description": "The maximum number of requests per month and API key."
+    },
+    {
+      "name": "gamerm.rate-limit.apiKeys",
+      "type": "java.util.Set<java.lang.String>",
+      "description": "The list of valid API keys."
+    }
+  ] }

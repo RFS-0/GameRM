@@ -21,7 +21,7 @@ public class RateLimitingInterceptor implements HandlerInterceptor {
     @Override
     public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) throws Exception {
         String apiKey = request.getHeader("X-API-KEY");
-        if (!invalidApiKey(apiKey)) {
+        if (rateLimiter.invalidApiKey(apiKey)) {
             response.sendError(HttpStatus.UNAUTHORIZED.value(), "Missing Header: X-API-KEY");
             return false;
         }
@@ -35,14 +35,6 @@ public class RateLimitingInterceptor implements HandlerInterceptor {
 
         response.addHeader("X-Rate-Limit-Remaining", String.valueOf(probe.getRemainingTokens()));
 
-        return true;
-    }
-
-    // TODO: check against set of valid api keys
-    private boolean invalidApiKey(String apiKey) {
-        if (apiKey == null || apiKey.isEmpty()) {
-            return false;
-        }
         return true;
     }
 }

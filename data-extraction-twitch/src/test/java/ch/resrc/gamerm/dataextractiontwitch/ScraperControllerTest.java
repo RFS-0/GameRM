@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@TestPropertySource(properties = { "server.servlet.context-path=/api" })
+@TestPropertySource(properties = {"server.servlet.context-path=/api"})
 class ScraperControllerTest {
 
     @Autowired
@@ -24,7 +24,10 @@ class ScraperControllerTest {
     public void shouldReturnEmailAddressWhenValidTwitchIdIsProvided() throws Exception {
         String twitchId = "monadart";
 
-        this.mockMvc.perform(get("/twitch/{twitchId}", twitchId))
+        this.mockMvc.perform(
+                        get("/twitch/{twitchId}", twitchId)
+                                .header("X-API-KEY", "12ce5076-facd-11ed-be56-0242ac120002")
+                )
                 .andExpect(status().isOk())
                 .andExpect(content().string(containsString("monadart87@gmail.com")));
     }
