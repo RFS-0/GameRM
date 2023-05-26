@@ -1,0 +1,60 @@
+= Deployment
+
+A customized docker image is needed because selenium needs to be installed in the container.
+
+== Build
+
+The docker image is built using the following commands:
+
+=== To load the built image into the local Docker daemon
+
+Note: currently only single platform build are supported
+
+[source, shell]
+....
+docker buildx build --platform linux/arm64 -t gcr.io/gamerm/gamerm . --load
+....
+
+=== To push the built image to a Docker registry
+
+[source, shell]
+....
+docker buildx build --platform linux/arm64 -t gcr.io/gamerm/gamerm . --push
+docker buildx build --platform linux/amd64 -t gcr.io/gamerm/gamerm . --push
+docker buildx build --platform linux/amd64,linux/arm64 -t gcr.io/gamerm/gamerm . --push
+# for gcp use this one
+docker build --build-arg BUILDPLATFORM=linux/amd64 . -t gcr.io/gamerm/gamerm
+....
+
+=== To pull the built image
+
+[source, shell]
+....
+docker pull --platform linux/arm64 gcr.io/gamerm/gamerm
+docker pull --platform linux/amd64 gcr.io/gamerm/gamerm
+....
+
+== Run
+
+Shell in image
+
+[source, shell]
+....
+docker run -it --entrypoint /bin/bash gcr.io/gamerm/gamerm
+....
+
+Run app in docker container locally
+
+[source, shell]
+....
+docker run -p 8080:8080 gcr.io/gamerm/gamerm
+....
+
+== Deploy
+
+The app is deployed to Google Cloud Run.
+
+[source, shell]
+....
+gcloud run deploy gamerm --image gcr.io/gamerm/gamerm --platform managed --region europe-west6 --allow-unauthenticated
+....
