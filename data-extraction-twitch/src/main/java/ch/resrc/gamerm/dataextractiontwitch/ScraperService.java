@@ -1,11 +1,10 @@
 package ch.resrc.gamerm.dataextractiontwitch;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -21,15 +20,13 @@ import java.util.regex.Pattern;
 @Service
 public class ScraperService {
 
-
     private final WebDriver driver;
     private final WebDriverWait wait;
 
     public ScraperService() {
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        driver = new ChromeDriver(options);
+        FirefoxOptions options = new FirefoxOptions();
+        options.addArguments("-headless");
+        driver = new FirefoxDriver(options);
         wait = new WebDriverWait(driver, Duration.ofSeconds(5), Duration.ofSeconds(1));
     }
 
@@ -68,6 +65,4 @@ public class ScraperService {
         }
         return emailAddresses;
     }
-
-
 }
