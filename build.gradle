@@ -4,7 +4,6 @@ plugins {
 
 group = 'ch.resrc.gamerm'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '17'
 
 allprojects {
 	repositories {
